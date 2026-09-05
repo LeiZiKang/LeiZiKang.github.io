@@ -1,0 +1,119 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="description" content="See and change your Mac default browser from the menu bar.">
+  <title>Browser Switcher for Mac</title>
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <style>
+    :root { color-scheme: dark; --bg:#07101f; --text:#f7fbff; --muted:#a6b3c7; --line:rgba(255,255,255,.11); --cyan:#7dd3fc; --green:#a7f3d0; }
+    * { box-sizing:border-box; }
+    html { scroll-behavior:smooth; }
+    body { margin:0; color:var(--text); background:radial-gradient(circle at 16% 5%,rgba(41,153,255,.21),transparent 34rem),radial-gradient(circle at 86% 18%,rgba(186,91,255,.15),transparent 35rem),var(--bg); font:16px/1.6 -apple-system,BlinkMacSystemFont,"SF Pro Text",Inter,system-ui,sans-serif; }
+    a { color:inherit; text-decoration:none; }
+    .shell { width:min(1180px,calc(100% - 40px)); margin:auto; }
+    nav { min-height:80px; display:flex; align-items:center; justify-content:space-between; gap:24px; }
+    .brand { display:flex; align-items:center; gap:12px; font-weight:700; }
+    .brand img { width:42px; height:42px; border-radius:12px; box-shadow:0 14px 40px rgba(0,0,0,.35); }
+    .navlinks { display:flex; align-items:center; gap:8px; }
+    .navlinks a,.lang { padding:8px 13px; border-radius:999px; color:var(--muted); }
+    .navlinks a:hover { color:white; background:rgba(255,255,255,.06); }
+    .lang { border:1px solid var(--line); background:rgba(255,255,255,.07); color:white; cursor:pointer; font:inherit; }
+    .hero { min-height:650px; display:grid; grid-template-columns:1.05fr .95fr; align-items:center; gap:70px; padding:70px 0 110px; }
+    .eyebrow { color:var(--cyan); text-transform:uppercase; letter-spacing:.18em; font-size:13px; font-weight:800; }
+    h1 { max-width:720px; margin:22px 0; font-size:clamp(50px,7vw,80px); line-height:.98; letter-spacing:-.055em; }
+    .lead { max-width:610px; color:#c0cad9; font-size:20px; line-height:1.7; }
+    .status { display:inline-flex; margin-top:24px; padding:11px 18px; border:1px solid var(--line); border-radius:999px; background:rgba(255,255,255,.07); font-weight:700; }
+    .meta { margin-top:14px; color:#8290a5; font-size:13px; }
+    .shot { position:relative; padding:13px; border:1px solid rgba(255,255,255,.16); border-radius:34px; background:linear-gradient(145deg,rgba(255,255,255,.15),rgba(255,255,255,.045)); box-shadow:0 35px 100px rgba(0,0,0,.42); backdrop-filter:blur(28px); }
+    .shot:before { content:""; position:absolute; inset:-35px; z-index:-1; border-radius:50px; background:linear-gradient(135deg,rgba(56,189,248,.23),rgba(168,85,247,.16)); filter:blur(35px); }
+    .shot img { display:block; width:100%; border-radius:25px; }
+    section.band { padding:95px 0; border-block:1px solid rgba(255,255,255,.07); background:rgba(0,0,0,.12); }
+    .section-head { max-width:700px; margin-bottom:38px; }
+    h2 { margin:8px 0; font-size:clamp(34px,5vw,52px); line-height:1.08; letter-spacing:-.035em; }
+    .grid { display:grid; grid-template-columns:repeat(3,1fr); gap:16px; }
+    .card { min-height:190px; padding:26px; border:1px solid var(--line); border-radius:25px; background:linear-gradient(145deg,rgba(255,255,255,.095),rgba(255,255,255,.035)); }
+    .card strong { display:block; margin-bottom:10px; font-size:18px; }
+    .card p,.section-head p { color:var(--muted); }
+    .how { padding:100px 0; }
+    .steps { display:grid; grid-template-columns:repeat(3,1fr); gap:18px; counter-reset:step; }
+    .step { padding:28px; border-left:1px solid var(--line); counter-increment:step; }
+    .step:before { content:"0" counter(step); color:var(--cyan); font-weight:800; }
+    .step h3 { margin:15px 0 8px; font-size:24px; }
+    .step p { color:var(--muted); }
+    .privacy { margin:0 auto 100px; padding:32px; display:flex; align-items:center; justify-content:space-between; gap:25px; border:1px solid rgba(110,231,183,.22); border-radius:28px; background:rgba(52,211,153,.07); }
+    .privacy p { margin:5px 0 0; color:var(--muted); }
+    .actions { display:flex; flex-wrap:wrap; gap:12px; }
+    .button { display:inline-flex; align-items:center; justify-content:center; min-height:44px; padding:10px 17px; border:1px solid var(--line); border-radius:999px; font-weight:700; }
+    .button.primary { color:#03101c; background:var(--green); border-color:transparent; }
+    footer { padding:30px 0; border-top:1px solid rgba(255,255,255,.08); color:#7f8ca1; }
+    footer .shell { display:flex; align-items:center; justify-content:space-between; gap:20px; }
+    [data-zh] { display:none; }
+    html.zh [data-en] { display:none; }
+    html.zh [data-zh] { display:initial; }
+    @media (max-width:850px) { .hero { grid-template-columns:1fr; padding-top:40px; } .grid,.steps { grid-template-columns:1fr; } .navlinks a { display:none; } .privacy,footer .shell { align-items:flex-start; flex-direction:column; } }
+  </style>
+</head>
+<body>
+  <nav class="shell">
+    <a class="brand" href="#top"><img src="app-icon.png" alt=""><span>Browser Switcher</span></a>
+    <div class="navlinks">
+      <a href="#features"><span data-en>Features</span><span data-zh>功能</span></a>
+      <a href="#how"><span data-en>How it works</span><span data-zh>使用方式</span></a>
+      <a href="https://github.com/LeiZiKang/browser-switcher-support/issues/new/choose"><span data-en>Support</span><span data-zh>支持</span></a>
+      <a href="privacy.html"><span data-en>Privacy</span><span data-zh>隐私</span></a>
+      <button class="lang" type="button" onclick="toggleLanguage()"><span data-en>中文</span><span data-zh>English</span></button>
+    </div>
+  </nav>
+
+  <main id="top">
+    <div class="hero shell">
+      <div>
+        <div class="eyebrow"><span data-en>Made for macOS 26</span><span data-zh>为 macOS 26 打造</span></div>
+        <h1><span data-en>Your default browser, at a glance.</span><span data-zh>默认浏览器，一眼即知。</span></h1>
+        <p class="lead"><span data-en>See the current default browser in your menu bar and switch between installed browsers in a click.</span><span data-zh>在菜单栏直接查看当前默认浏览器，并在已安装的浏览器之间快速切换。</span></p>
+        <div class="status"><span data-en>Coming soon to the Mac App Store</span><span data-zh>即将登陆 Mac App Store</span></div>
+        <div class="meta"><span data-en>Planned launch price: US$0.99 · Requires macOS 26 or later · Local pricing may vary</span><span data-zh>计划首发价格：US$0.99 · 需要 macOS 26 或更高版本 · 各地区价格可能不同</span></div>
+      </div>
+      <figure class="shot"><img src="menu-bar-panel.png" alt="Browser Switcher menu bar panel"></figure>
+    </div>
+
+    <section id="features" class="band"><div class="shell">
+      <div class="section-head"><div class="eyebrow"><span data-en>Focused by design</span><span data-zh>专注而克制</span></div><h2><span data-en>One job, done well.</span><span data-zh>只做一件事，并把它做好。</span></h2></div>
+      <div class="grid">
+        <article class="card"><strong><span data-en>Live menu bar icon</span><span data-zh>菜单栏动态图标</span></strong><p><span data-en>The icon follows your current default browser automatically.</span><span data-zh>图标会自动跟随当前默认浏览器更新。</span></p></article>
+        <article class="card"><strong><span data-en>The real system default</span><span data-zh>真正的系统默认设置</span></strong><p><span data-en>Update both HTTP and HTTPS through the macOS system flow.</span><span data-zh>通过 macOS 系统流程同时更新 HTTP 与 HTTPS。</span></p></article>
+        <article class="card"><strong>Liquid Glass</strong><p><span data-en>Native macOS 26 components that feel at home on your desktop.</span><span data-zh>使用 macOS 26 原生组件，自然融入桌面。</span></p></article>
+        <article class="card"><strong><span data-en>Dynamic discovery</span><span data-zh>动态发现浏览器</span></strong><p><span data-en>Automatically finds installed HTTP and HTTPS browsers, including Safari, Chrome, Dia, and Ego Lite.</span><span data-zh>自动发现 Safari、Chrome、Dia、Ego Lite 等已安装浏览器。</span></p></article>
+        <article class="card"><strong><span data-en>English and Chinese</span><span data-zh>中文与 English</span></strong><p><span data-en>Follow the system language or choose manually.</span><span data-zh>可跟随系统语言，也可手动切换。</span></p></article>
+        <article class="card"><strong><span data-en>Private and local</span><span data-zh>本地且私密</span></strong><p><span data-en>No account, ads, analytics, or link interception.</span><span data-zh>不需要账户，不含广告、分析或链接中转。</span></p></article>
+      </div>
+    </div></section>
+
+    <section id="how" class="how shell">
+      <div class="section-head"><div class="eyebrow"><span data-en>Three small steps</span><span data-zh>只需三步</span></div><h2><span data-en>Switch without the Settings detour.</span><span data-zh>无需再绕进系统设置。</span></h2></div>
+      <div class="steps">
+        <div class="step"><h3><span data-en>Launch</span><span data-zh>启动</span></h3><p><span data-en>The menu bar icon shows your current default browser.</span><span data-zh>菜单栏图标显示当前默认浏览器。</span></p></div>
+        <div class="step"><h3><span data-en>Choose</span><span data-zh>选择</span></h3><p><span data-en>Select any compatible browser installed on your Mac.</span><span data-zh>选择 Mac 上任意兼容浏览器。</span></p></div>
+        <div class="step"><h3><span data-en>Confirm</span><span data-zh>确认</span></h3><p><span data-en>If macOS asks, approve the change and the icon updates.</span><span data-zh>如 macOS 要求确认，批准后图标自动更新。</span></p></div>
+      </div>
+    </section>
+
+    <section class="privacy shell">
+      <div><h3><span data-en>Your browser choice stays yours.</span><span data-zh>你的浏览器选择，只属于你。</span></h3><p><span data-en>Browser information and preferences are handled locally on your Mac.</span><span data-zh>浏览器信息和应用偏好仅在 Mac 本地处理。</span></p></div>
+      <div class="actions"><a class="button primary" href="https://github.com/LeiZiKang/browser-switcher-support/issues/new/choose"><span data-en>Report an issue</span><span data-zh>报告问题</span></a><a class="button" href="privacy.html"><span data-en>Privacy Policy</span><span data-zh>隐私政策</span></a></div>
+    </section>
+  </main>
+
+  <footer><div class="shell"><span>© 2026 Browser Switcher</span><span><span data-en>Independent macOS utility · App Store release in preparation</span><span data-zh>独立 macOS 工具 · App Store 上架准备中</span></span></div></footer>
+  <script>
+    const savedLanguage = localStorage.getItem('browser-switcher-language');
+    if (savedLanguage === 'zh' || (!savedLanguage && navigator.language.toLowerCase().startsWith('zh'))) document.documentElement.classList.add('zh');
+    function toggleLanguage() {
+      document.documentElement.classList.toggle('zh');
+      localStorage.setItem('browser-switcher-language', document.documentElement.classList.contains('zh') ? 'zh' : 'en');
+    }
+  </script>
+</body>
+</html>
