@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url><loc>https://leizikang.github.io/</loc></url>
-  <url><loc>https://leizikang.github.io/privacy.html</loc></url>
-  <url><loc>https://leizikang.github.io/support.html</loc></url>
-  <url><loc>https://leizikang.github.io/terms.html</loc></url>
-  <url><loc>https://leizikang.github.io/guides/change-default-browser-mac.html</loc></url>
-  <url><loc>https://leizikang.github.io/zh/</loc></url>
-  <url><loc>https://leizikang.github.io/zh/privacy.html</loc></url>
-  <url><loc>https://leizikang.github.io/zh/support.html</loc></url>
-  <url><loc>https://leizikang.github.io/zh/terms.html</loc></url>
-  <url><loc>https://leizikang.github.io/zh/guides/change-default-browser-mac.html</loc></url>
+  <url><loc>https://leizikang.github.io/</loc><lastmod>2026-09-18</lastmod></url>
+  <url><loc>https://leizikang.github.io/support.html</loc><lastmod>2026-09-18</lastmod></url>
+  <url><loc>https://leizikang.github.io/privacy.html</loc><lastmod>2026-09-18</lastmod></url>
+  <url><loc>https://leizikang.github.io/terms.html</loc><lastmod>2026-09-18</lastmod></url>
+  <url><loc>https://leizikang.github.io/guides/change-default-browser-mac.html</loc><lastmod>2026-09-18</lastmod></url>
+  <url><loc>https://leizikang.github.io/zh/</loc><lastmod>2026-09-18</lastmod></url>
+  <url><loc>https://leizikang.github.io/zh/support.html</loc><lastmod>2026-09-18</lastmod></url>
+  <url><loc>https://leizikang.github.io/zh/privacy.html</loc><lastmod>2026-09-18</lastmod></url>
+  <url><loc>https://leizikang.github.io/zh/terms.html</loc><lastmod>2026-09-18</lastmod></url>
+  <url><loc>https://leizikang.github.io/zh/guides/change-default-browser-mac.html</loc><lastmod>2026-09-18</lastmod></url>
 </urlset>
